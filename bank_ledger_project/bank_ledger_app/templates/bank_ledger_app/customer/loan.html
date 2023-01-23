@@ -1,0 +1,25 @@
+<!-- customer/loan.html-->
+
+{% extends 'base.html' %}
+
+{% block back-button %}
+<a class="btn-blue btn-back" href="{% url 'bank_ledger_app:profile-info' user.customer.pk %}"> &#x3c; Back</a>
+{% endblock back-button %}
+
+{% block content %}
+<main>
+	<section class="container">
+		<h1>New loan</h1>
+		<div class="box-wrapper">
+			<form action="{% url 'bank_ledger_app:loan' %}" method="POST" class="box-left">
+				{% csrf_token %}
+				{{ loan_form }}
+				<div class="btn-wrapper">
+					<button type="submit" class="btn-blue">New loan</button>
+				</div>
+			</form>
+		</div>
+	</section>
+</main>
+{% endblock content %}
+

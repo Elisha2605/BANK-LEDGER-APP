@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "transaction-broker"
+version = "0.1.0"
+description = ""
+authors = ["DryDish <nyt604@gmail.com>"]
+readme = "README.md"
+packages = [{include = "transaction_broker"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+uvicorn = "^0.20.0"
+fastapi = "^0.87.0"
+requests = "^2.28.1"
+python-dotenv = "^0.21.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.autopep8]
+max_line_length = 120

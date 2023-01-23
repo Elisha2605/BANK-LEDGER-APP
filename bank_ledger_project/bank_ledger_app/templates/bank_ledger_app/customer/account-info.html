@@ -1,0 +1,40 @@
+<!-- customer/account-info.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<main>
+   <section class="container">
+      <h1>{{ account.account_name }} History</h1>
+      <div class="box-wrapper">
+	 <table>
+	    <tr>
+	       <th>Transaction ID</th>
+	       <th>Date</th>
+	       <th>Time</th>
+	       <th>From - account</th>
+	       <th>To - account</th>
+	       <th>Comment</th>
+	       <th>Amount</th>
+	    </tr>
+
+	    {% for history in account_history %}
+	    <tr>
+	       <td>{{ history.transaction_id }}</td>
+	       <td>{{ history.timestamp|date:"M d, Y" }}</td>
+	       <td>{{ history.timestamp|date:"H:m" }}</td>
+	       <td>{{ history.origin }}</td>
+	       <td>{{ history.destination }}</td>
+	       <td>{{ history.comment }}</td>
+	       <td>{{ history.amount }} kr</td>
+	    </tr>
+
+	    {% endfor %}
+	 </table>
+      </div>
+   </section>
+</main>
+<br><br>
+<br><br>
+{% endblock content %}
+

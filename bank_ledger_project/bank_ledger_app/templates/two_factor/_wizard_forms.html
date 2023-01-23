@@ -1,0 +1,14 @@
+{% load tf_tags %}
+    {{ wizard.management_form }}
+<div class='login-container'>
+    {% for field in wizard.form %}
+    <label class = "form-label label"> {{ field.label }} </label>
+</br>
+    {{ field | add_classes:'box'}}
+</br>
+    {% endfor %}
+
+</br>
+
+</div>
+  

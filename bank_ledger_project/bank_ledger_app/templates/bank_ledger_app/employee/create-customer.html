@@ -1,0 +1,24 @@
+<!-- employee/create-customer.html-->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<main>
+   <section class="container">
+      <h1>Create Customer</h1>
+      <div class="box-wrapper">
+	 <form class="box-left"
+	       action="{% url 'bank_ledger_app:create-customer' %}"
+	       method="post"
+	    >
+	    {% csrf_token %}
+			{{ create_user_form }}
+	    	{{ create_customer_form }}
+	    	<button class="btn-blue">Create</button>
+	 </form>
+      </div>
+   </section>
+</main>
+{% endblock content %}
+
+

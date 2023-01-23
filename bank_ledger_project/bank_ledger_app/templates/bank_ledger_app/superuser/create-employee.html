@@ -1,0 +1,23 @@
+<!-- superuser/create-employee.html-->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<main>
+  <section class="container">
+    <h1>Create Employee</h1>
+    <div class="box-wrapper">
+      <form class="box-left"
+            action="{% url 'bank_ledger_app:create-employee' %}"
+            method="post"
+            >
+            {% csrf_token %}
+            {{ create_user_form }}
+            {{ create_employee_form }}
+            <button class="btn-blue">Create</button>
+      </form>
+    </div>
+  </section>
+</main>
+{% endblock content %}
+

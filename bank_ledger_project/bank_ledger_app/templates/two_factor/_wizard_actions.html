@@ -1,0 +1,19 @@
+{% load i18n %}
+{% if user.is_authenticated %}
+{% if cancel_url %}
+  <a href="{{ cancel_url }}"
+     class="float-right btn btn-link">{% trans "Cancel" %}</a>
+{% endif %}
+{% if wizard.steps.prev %}
+  <button name="wizard_goto_step" type="submit"
+          value="{{ wizard.steps.prev }}"
+          class="btn btn-secondary">{% trans "Back" %}</button>
+{% else %}
+  <button disabled name="" type="button" class="btn">{% trans "Back" %}</button>
+{% endif %}
+{% endif %}
+{% if wizard.steps.current == 'welcome' %}
+<button type="submit" class="login-btn btn-blue">{% trans "Next" %}</button>
+{% else %}
+<button type="submit" class="login-btn btn-blue">{% trans "Login" %}</button>
+{% endif %}

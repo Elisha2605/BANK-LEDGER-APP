@@ -1,0 +1,23 @@
+table {
+    border-collapse: collapse; 
+    width: 100%;
+    
+  }
+  th {
+    background-color: var(--box-color-grey);
+    font-weight: var(--font-weight-5x);
+  }
+  td, th {
+    font-family: var(--primary-font-roboto);
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  td {
+    font-weight: var(--font-weight-2x);
+  }
+  
+  tr:nth-child(odd) {
+    background-color: rgb(233, 233, 233);
+  }
+  

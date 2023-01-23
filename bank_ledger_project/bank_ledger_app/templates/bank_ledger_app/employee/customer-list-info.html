@@ -1,0 +1,47 @@
+<!-- employee/customer-list-info.html-->
+
+{% extends 'base.html' %} {% block content %}
+<main>
+    <section class="container">
+        <h1>Customer list</h1>
+        <div class="box-wrapper">
+            <div class="box-left">
+                <form>
+                    {% csrf_token %}
+                    <div class="search-bar-container">
+                        <svg class="svg-icon search-icon" 
+                            aria-labelledby="title desc" 
+                            role="img" 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            viewBox="0 0 19.9 19.7"><title 
+                            id="title">Search Icon</title>
+                            <desc id="desc">A magnifying glass icon.</desc>
+                            <g class="search-path" fill="none" stroke="#848F91">
+                                <path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"/>
+                                <circle cx="8" cy="8" r="7"/>
+                            </g>
+                        </svg>
+                        <input
+                            name="customer-search"
+                            placeholder="Search customer"
+                            class="customer-search"
+                            type="text"
+                            hx-post="{% url 'bank_ledger_app:customer-search' %}"
+                            hx-trigger="keyup changed delay:100ms"
+                            hx-target="#search-results"
+                            hx-indicator=".htmx-indicator"
+                        />
+                    </div>
+                </form>
+                <div class="box box-light-border box-column-5x box-3x box-grey">
+                    <span>E-mail</span>
+                    <span>Phonenumber</span>
+                    <span>Rank</span>
+                </div>
+                <div id="search-results">Search results...</div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}
+

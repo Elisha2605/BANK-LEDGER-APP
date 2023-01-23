@@ -1,0 +1,31 @@
+<!-- customer/own-transfer.html-->
+
+{% extends 'base.html'%}
+
+{% block back-button %}
+<a class="btn-blue btn-back" href="{% url 'bank_ledger_app:profile-info' user.customer.pk %}"> &#x3c; Back</a>
+{% endblock back-button %}
+
+{% block content %}
+<main>
+	<section class="container">
+		<h1>Transfer to own account</h1>
+		<div class="box-wrapper">	
+			<div class="box-left">
+				<form 
+				 	method="POST"
+				 	action="{% url 'bank_ledger_app:own-transfer' %}"
+				 	class="box-left">
+					{% csrf_token %}
+					{{own_transfer_form}}
+					<div class="btn-wrapper">
+						<button type="submit" class="btn-blue">Transfer</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+</main>
+{% endblock content %}
+
+

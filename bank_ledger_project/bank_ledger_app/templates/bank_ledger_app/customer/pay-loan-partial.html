@@ -1,0 +1,15 @@
+<!-- customer/payl-loan-partial.html-->
+
+<section class="container">
+  <br>
+<h2 class="pay-loan">Pay loan</h2>
+  <div class="box-wrapper">
+    <form action="{% url 'bank_ledger_app:pay-loan-partial' account_id  %}" method="POST" class="box-left">
+      {% csrf_token %}
+       {{ pay_loan_form }}
+      <div class="btn-wrapper">
+        <button type="submit" class="btn-blue">Pay loan</button>
+      </div>
+    </form>
+  </div>
+</section>

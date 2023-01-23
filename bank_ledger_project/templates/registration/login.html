@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+   <section class="section-login">
+	    <h1>Login</h1>
+	    <div class="login-container">
+	       <div>
+		  <label class="login-label label" for="username">username</label>
+		  <input class="box" type="text" name="username" id="email">
+	       </div>
+	       <div>
+		  <label class="login-label label" for="password">password</label>
+		  <input class="box" type="password" name="password" id="password">
+	       </div>
+	    </div>
+	    <button class="login-btn btn-blue" type="submit">Login</button>
+	 </section>
+</form>
+{% endblock content %}
+

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="container">
+    <div class="message error">
+        <h2>{{ title }}</h2>
+        <p>{{ description }}</p>
+        <button class="btn-error" onclick="history.back()">Go Back</button>
+    </div>
+</section>
+{% endblock content %}
+

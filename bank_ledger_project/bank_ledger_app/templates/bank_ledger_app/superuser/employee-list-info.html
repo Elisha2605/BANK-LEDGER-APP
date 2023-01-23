@@ -1,0 +1,36 @@
+<!-- employee/customer-list-info.html-->
+
+{% extends 'base.html' %}
+
+{{employees}}
+
+{% block content %}
+<main>
+  <section class="container">
+    <h1>Employee list</h1>
+    <div class="box-wrapper">
+      <div class="box-left">
+        <div class="box box-light-border box-column-5x box-3x box-grey">
+          <span>Username</span>
+          <span>email</span>
+          <span>ID</span>
+        </div>
+        {% for employee in employees %}
+        <div>
+            <div id="{{customer.pk}}"class="box box-light-border box-column-5x box-3x">
+              <span>{{employee.user}}</span>
+              <span>{{employee.email}}</span>
+              <span>{{employee.user.pk}}</span>
+            </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </section>
+</main>
+{% endblock content %}
+
+
+
+

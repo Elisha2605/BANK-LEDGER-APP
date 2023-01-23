@@ -1,0 +1,12 @@
+<!-- customer/customer-list-partial.html -->
+
+{% for customer in customers %}
+<a href="{% url 'bank_ledger_app:customer-profile-info' customer.pk %}">
+  <div id="{{customer.pk}}"class="box box-light-border box-column-5x box-3x">
+   <span>{{customer.email}}</span>
+   <span>{{customer.phone_number}}</span>
+   <span>{{customer.rank}}</span>
+  </div>
+</a>
+{% endfor %}
+

@@ -1,0 +1,11 @@
+<!-- employee/create-account-partial.html -->
+
+<br>
+<h3>Create account</h3>
+<form action="{% url 'bank_ledger_app:create-account-partial' customer_id %}" method="POST">
+   {% csrf_token %}
+   {{ create_user_form }}
+   {{ create_account_form }}
+   <button type="submit" class="btn-blue">Submit</button>
+</form>
+

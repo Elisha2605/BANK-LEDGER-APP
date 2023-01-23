@@ -1,0 +1,74 @@
+version: '3'
+
+services:
+  nginx:
+    restart: always
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: ./configs/nginx/nginx.dockerfile
+    networks: [ docker-net ]
+    ports: [ 80:80 ]
+
+  long-shire:
+    container_name: long-shire
+    build:
+      context: .
+      dockerfile: ./configs/bank-config/bank-config.dockerfile
+    environment:
+      SERVER_PORT: ${LONG_SHIRE_PORT}
+      SERVER_HOSTNAME: ${LONG_SHIRE_HOSTNAME}
+      OTHER_BANK_HOST: ${GOLDMAN_SHERBERT_HOSTNAME}
+      DJANGO_SUPERUSER_USERNAME: ${LONG_SHIRE_USERNAME}
+      DJANGO_SUPERUSER_EMAIL: ${LONG_SHIRE_EMAIL}
+      DJANGO_SUPERUSER_PASSWORD: ${LONG_SHIRE_PASSWORD}
+    command: runserver 0.0.0.0:$LONG_SHIRE_PORT
+    networks: [ docker-net, redis-net ]
+    volumes:
+      - long-shire-volume:/service/database:rw
+
+  goldman-sherbert:
+    container_name: goldman-sherbert
+    build:
+      context: .
+      dockerfile: ./configs/bank-config/bank-config.dockerfile
+    environment:
+      SERVER_PORT: ${GOLDMAN_SHERBERT_PORT}
+      SERVER_HOSTNAME: ${GOLDMAN_SHERBERT_HOSTNAME}
+      OTHER_BANK_HOST: ${LONG_SHIRE_HOSTNAME}
+      DJANGO_SUPERUSER_USERNAME: ${GOLDMAN_SHERBERT_USERNAME}
+      DJANGO_SUPERUSER_EMAIL: ${GOLDMAN_SHERBERT_EMAIL}
+      DJANGO_SUPERUSER_PASSWORD: ${GOLDMAN_SHERBERT_PASSWORD}
+    command: runserver 0.0.0.0:$GOLDMAN_SHERBERT_PORT
+    networks: [ docker-net, redis-net ]
+    volumes:
+      - goldman-sherbert-volume:/service/database:rw
+
+  transaction-broker:
+    container_name: transaction-broker
+    build:
+      context: .
+      dockerfile: ./configs/transaction-broker/transaction-broker.dockerfile
+    networks: [ docker-net ]
+    environment:
+      BROKER_PORT: ${BROKER_PORT}
+      RELOAD_UVICORN: ${RELOAD_UVICORN}
+      BROKER_HOST: ${BROKER_HOST}
+
+  redis-server:
+    container_name: redis-server
+    image: redis:alpine
+    networks: [ redis-net ]
+
+
+networks:
+  docker-net:
+    name: docker-net
+  redis-net:
+    name: redis-net
+
+volumes:
+  goldman-sherbert-volume:
+    name: goldman-sherbert-volume
+  long-shire-volume:
+    name: long-shire-volume

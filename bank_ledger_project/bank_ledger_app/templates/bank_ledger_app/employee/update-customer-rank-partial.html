@@ -1,0 +1,10 @@
+<!-- customer/update-customer-rank-partial.html -->
+
+<br>
+<h3>Update rank</h3>
+<form action="{% url 'bank_ledger_app:update-customer-rank-partial' customer_id %}" method="POST">
+   {% csrf_token %}
+   {{ update_customer_rank_form }}
+   <button type="submit" class="btn-blue">update</button>
+</form>
+

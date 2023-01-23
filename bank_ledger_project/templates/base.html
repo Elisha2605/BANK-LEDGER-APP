@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Bank Ledger</title>
+		<link rel='stylesheet' href="{% static 'css/login.css' %}">
+		<link rel='stylesheet' href="{% static 'css/main.css' %}">
+		{% block css %}
+		{% endblock css%}
+	</head>
+	<body>
+		<header>
+			<h2>BANK LEDGER 9000</h2>
+			<nav> 
+				{% block navigation %}
+				{% if user.is_superuser and user.is_authenticated%}
+					<a class="nav-item" href="{% url 'two_factor:profile' %}">Two Factor</a>
+					<a class="nav-item" href="{% url 'bank_ledger_app:create-employee' %}">Create employee</a>
+					<a class="nav-item" href="{% url 'bank_ledger_app:employee-list-info' %}">employees</a>
+					<a class="nav-item" href="{% url 'bank_ledger_app:customer-list-info' %}">Customers</a>
+					<a class="nav-item" href="{% url 'logout' %}">logout</a>
+				{% elif user.is_staff and user.is_authenticated %}
+					<a class="nav-item" href="{% url 'two_factor:profile' %}">Two Factor</a>
+					<a class="nav-item" href="{% url 'bank_ledger_app:create-customer' %}">Create customer</a>
+					<a class="nav-item" href="{% url 'bank_ledger_app:customer-list-info' %}">Customers</a>
+					<a class="nav-item" href="{% url 'logout' %}">logout</a>
+				{% elif user.is_authenticated %}
+					<a class="nav-item" href="{% url 'two_factor:profile' %}">Two Factor</a>
+					<a class="nav-item" href="{% url 'bank_ledger_app:own-transfer' %}">Own Transfer</a>
+					<a class="nav-item" href="{% url 'bank_ledger_app:other-transfer' %}">Transfer to others</a>
+					<a class="nav-item" href="{% url 'bank_ledger_app:loan'%}">Take Loan</a>
+					<a class="nav-item" href="{% url 'logout' %}">Log out</a>
+				{% endif %}
+				{% endblock navigation %}
+			</nav>
+		</header>
+		{% block back-button %}
+		{% endblock back-button %}
+		{% block content %}
+		{% endblock content %}
+		{% block footer %}
+		{% endblock footer %}
+
+
+
+
+
+
+		<script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+		<script>
+			document.body.addEventListener('htmx:configRequest', (event) => {
+				event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+			})
+		</script>
+		<script>
+			htmx.onLoad(function(content) {
+				var sortables = content.querySelectorAll(".sortable");
+				for (var i = 0; i < sortables.length; i++) {
+					var sortable = sortables[i];
+					new Sortable(sortable, {
+						animation: 150,
+						ghostClass: 'blue-background-class'
+					});
+				}
+			})
+		</script>
+
+	</body>
+</html>
+
+
+

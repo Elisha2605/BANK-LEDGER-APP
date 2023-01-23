@@ -1,0 +1,65 @@
+<!-- customer/loan-info.html -->
+
+{% extends 'base.html' %}
+
+{% block back-button %}
+<a class="btn-blue btn-back" href="{% url 'bank_ledger_app:profile-info' user.customer.pk %}"> &#x3c; Back</a>
+{% endblock back-button %}
+{% block content %}
+<main>
+	<section class="container">
+		<h1>Loan info</h1>
+		<div class="box-wrapper">
+			<div class="box-left">
+				{% for loan in loan_details %}
+				<label class="label">Loan ID</label>
+				<div class="box box-light-border box-left-bg">{{ loan.loan_id}}</div>
+				<label class="label">Date and time</label>
+				<div class="box box-light-border box-left-bg">{{ loan.date|date:"M d, Y  -  H:m" }}</div>
+				<label class="label">Loaned Amount</label>
+				<div class="box box-light-border box-left-bg">{{ loan.amount }}</div>
+				<label class="label">Remaining Amount</label>
+				<div class="box box-light-border box-left-bg">{{ loan.current_balance}} kr</div>
+				<div class="btn-wrapper">
+					<a 
+						class="btn-blue" 	
+						hx-swap="outerHTML"
+						hx-get="{% url 'bank_ledger_app:pay-loan-partial' loan_id%}"
+						hx-trigger="click"
+						hx-target="#pay-loan"
+						>Pay loan
+					</a>
+				</div>
+
+				{% endfor %}
+				<div id="pay-loan"></div>
+			
+			</div>
+			<div class="box-right">
+				<label class="label">Repayments history</label>
+				<table>
+					<tr>
+						<th>From account</th>
+						<th>Date</th>
+						<th>Time</th>
+						<th>Amount</th>	
+					</tr>
+					{% for repayment in repayments %}
+					<tr>
+						<td>{{ repayment.from_account }}</td>
+						<td>{{ repayment.date|date:"M d, Y" }}</td>
+						<td>{{ repayment.date|date:"H:i" }}</td>
+						<td>{{ repayment.amount }} kr</td>
+					</tr>	
+					{% endfor %}
+				</table>
+				<br>	
+			</div>
+		</div>
+	</section>
+
+</main>
+{% endblock content %}
+
+
+

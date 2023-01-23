@@ -1,0 +1,76 @@
+<!-- employee/customer-profile-info.html-->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<main>
+	<section class="container">
+		<h1>{{customer.user.username}} profile info</h1>
+		<div class="box-wrapper">
+			<div class="box-left">
+				<label class="label">Customer id:</label>
+				<div class="box box-light-border box-left-bg">{{customer.pk}}</div>
+				<label class="label">Phonenumber</label>
+				<div class="box box-light-border box-left-bg">{{customer.phone_number}}</div>
+				<label class="label">E-mail</label>
+				<div class="box box-light-border box-left-bg">{{customer.email}}</div>
+				<label class="label">Rank</label>
+				<div class="box box-light-border box-left-bg">{{customer.rank}}</div>
+
+				<div class="btn-wrapper">
+					<a 
+					 class="btn-blue" 
+					 hx-swap="outerHTML"
+					 hx-get="{% url 'bank_ledger_app:update-customer-rank-partial' customer.pk %}"
+					 hx-trigger="click"
+					 hx-target="#update-customer-rank"
+					 >Update customer
+					</a>
+						<a 
+					 class="btn-blue btn-right" 
+					 hx-swap="outerHTML"
+					 hx-get="{% url 'bank_ledger_app:create-account-partial' customer.pk %}"
+					 hx-trigger="click"
+					 hx-target="#create-account"
+					 >Create account
+						</a>
+				</div>
+			</div>
+			<div class="box-right">
+				<label class="label">Accounts</label>
+				{% for account in accounts %}
+				<a href="{% url 'bank_ledger_app:account-info' account.pk %}">
+					<div class="box box-light-border box-column-2x">
+						<span>{{account.account_name}}</span>
+						<span>{{ account.balance }} kr</span>
+					</div>
+				</a>
+				{% endfor %}
+				<br>
+				<label class="label">{% if loans|length > 0 %}Loans{% endif%}</label>
+
+				{% for loan in loans %}
+				{% if loan.current_balance == 0 %}
+				<a href="{% url 'bank_ledger_app:loan-info' loan.loan_id %}" style="display: none">
+					<div class="box box-light-border box-column-2x">
+						<span>{{ loan.comment|slice:"11:-1"|default:"(No name)" }}</span>
+						<span>{{ loan.current_balance }} kr</span>
+					</div>
+				</a>
+				{% else%}
+				<a href="{% url 'bank_ledger_app:customer-loan-info' customer.user.username loan.loan_id %}">
+					<div class="box box-light-border box-column-2x">
+						<span>{{ loan.comment|slice:"11:-1"|default:"(No name)" }}</span>
+						<span>{{ loan.current_balance }} kr</span>
+					</div>
+				</a>
+				{% endif %}
+				{% endfor%}
+			</div>
+		</div>
+		<div id="update-customer-rank"></div>
+		<div id="create-account"></div>
+	</section>
+</main>
+{% endblock content %}
+
